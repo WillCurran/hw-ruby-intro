@@ -56,9 +56,40 @@ end
 def binary_multiple_of_4? s
   return nil != (s =~ /(^0+$|^[01]*10{2,}$)/)
 end
-puts binary_multiple_of_4? '0'
 # Part 3
 
 class BookInStock
-# YOUR CODE HERE
+  attr_reader :isbn, :price
+  
+  def initialize isbn, price
+    validate_isbn isbn
+    validate_price price
+    @isbn = isbn
+    @price = price
+  end
+  
+  def validate_isbn isbn
+    raise ArgumentError.new("ISBN must be a string") unless isbn.is_a? String
+    if isbn == '' then raise ArgumentError.new("ISBN can't be empty string") end
+  end
+  
+  def validate_price price
+    raise ArgumentError.new("Price must be a number.") unless price.is_a? Numeric
+    if price <= 0 then raise ArgumentError.new("Price can't be <= $0.") end
+  end
+  
+  def isbn=(isbn)
+    validate_isbn isbn
+    @isbn = isbn
+  end
+  
+  def price=(price)
+    validate_price price
+    @price = price
+  end
+  
+  def price_as_string
+    return "$%0.2f" % @price
+  end
+  
 end
